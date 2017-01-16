@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "416395123412",
+    "firebase_url": "https://sumtrix-94448.firebaseio.com",
+    "project_id": "sumtrix-94448",
+    "storage_bucket": "sumtrix-94448.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416395123412:android:2b07108787807c10",
+        "android_client_info": {
+          "package_name": "zmnsoft.sumtrix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416395123412-sikqkjnfmq3u7qb8bjh0upvf67dchss8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgsI5mpHBEB6nJbuUh2rA47JZTsxdrNsU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416395123412-sikqkjnfmq3u7qb8bjh0upvf67dchss8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

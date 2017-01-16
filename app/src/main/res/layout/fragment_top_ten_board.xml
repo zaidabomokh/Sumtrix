@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="zmnsoft.sumtrix.Fragments.TopTenBoard"
+    android:background="@drawable/abstraction_light_pink"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_margin="7dp"
+        android:src="@drawable/top10"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/imageView" />
+
+    <LinearLayout
+        android:paddingLeft="15dp"
+        android:paddingTop="50dp"
+        android:id="@+id/textViews_Layout"
+        android:background="#53ff0008"
+        android:cacheColorHint="@android:color/transparent"
+        android:orientation="vertical"
+        android:layout_width="332dp"
+        android:layout_height="251dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1.01">
+
+    </LinearLayout>
+
+    <Button
+        android:textSize="19dp"
+        android:fontFamily="cursive"
+        android:layout_gravity="center"
+        android:width="200dp"
+        android:textStyle="bold|italic"
+        android:typeface="serif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Restart"
+        android:id="@+id/res_btn"
+        android:backgroundTint="#81ffffff" />
+
+    <Button
+        android:textSize="19dp"
+        android:fontFamily="cursive"
+        android:layout_gravity="center"
+        android:width="200dp"
+        android:textStyle="bold|italic"
+        android:typeface="serif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Main Screen"
+        android:id="@+id/stages_btn"
+        android:backgroundTint="#81ffffff" />
+
+</LinearLayout>

@@ -1,0 +1,109 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.StagesFragment"
+    android:background="@drawable/rsz_bluedesign"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:textStyle="italic|bold"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Welcome"
+        android:id="@+id/welcome_textView"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="5dp"/>
+
+    <GridLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:theme="@style/AppTheme.Button"
+            android:textStyle="bold|italic"
+            android:typeface="serif"
+            android:id="@+id/btn1"
+            android:text="Stage 1"
+            android:textColor="#FFFFFF"
+            android:textSize="21sp"
+            android:layout_width="120dp"
+            android:layout_height="85dp"
+            android:shadowDx="7"
+            android:shadowDy="4"
+            android:shadowRadius="25"
+            android:layout_row="0"
+            android:layout_column="0" />
+
+        <Button
+            android:theme="@style/AppTheme.Button"
+            android:textStyle="bold|italic"
+            android:typeface="serif"
+            android:id="@+id/btn2"
+            android:text="Stage 2"
+            android:textColor="#FFFFFF"
+            android:textSize="21sp"
+            android:layout_width="120dp"
+            android:layout_height="85dp"
+            android:shadowDx="7"
+            android:shadowDy="4"
+            android:shadowRadius="25"
+            android:layout_row="1"
+            android:layout_column="1" />
+
+        <Button
+            android:theme="@style/AppTheme.Button"
+            android:textStyle="bold|italic"
+            android:typeface="serif"
+            android:id="@+id/btn3"
+            android:text="Stage 3"
+            android:textColor="#FFFFFF"
+            android:textSize="21sp"
+            android:layout_width="120dp"
+            android:layout_height="85dp"
+            android:shadowDx="7"
+            android:shadowDy="4"
+            android:shadowRadius="25"
+            android:layout_row="2"
+            android:layout_column="2" />
+
+        <Button
+            android:theme="@style/AppTheme.Button"
+            android:textStyle="bold|italic"
+            android:typeface="serif"
+            android:id="@+id/btn4"
+            android:text="Stage 4"
+            android:textColor="#FFFFFF"
+            android:textSize="21sp"
+            android:layout_width="120dp"
+            android:layout_height="85dp"
+            android:shadowDx="7"
+            android:shadowDy="4"
+            android:shadowRadius="25"
+            android:layout_row="3"
+            android:layout_column="1" />
+
+        <Button
+            android:theme="@style/AppTheme.Button"
+            android:textStyle="bold|italic"
+            android:typeface="serif"
+            android:id="@+id/btn5"
+            android:text="Stage 5"
+            android:textColor="#FFFFFF"
+            android:textSize="21sp"
+            android:layout_width="120dp"
+            android:layout_height="85dp"
+            android:shadowDx="7"
+            android:shadowDy="4"
+            android:shadowRadius="25"
+            android:layout_row="5"
+            android:layout_column="0" />
+
+    </GridLayout>
+
+</LinearLayout>
