@@ -32,8 +32,8 @@ public class TopTenBoard extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_top_ten_board, container, false);
 
@@ -50,6 +50,26 @@ public class TopTenBoard extends Fragment {
             @Override
             public void onClick(View view) {
                 view.startAnimation(animAlpha);
+                animAlpha.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        SumTrixFragment sumTrixFragment = new SumTrixFragment();
+                        Bundle args = new Bundle();
+                        args.putInt("size", getArguments().getInt("size"));
+                        sumTrixFragment.setArguments(args);
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).commit();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
             }
         });
 

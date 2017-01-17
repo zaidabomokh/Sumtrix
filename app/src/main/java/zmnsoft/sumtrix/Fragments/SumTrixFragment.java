@@ -50,7 +50,7 @@ public class SumTrixFragment extends Fragment {
         myButton button;
         final myInteger[][] myBoard = sumTrixGame.getMyMatrix();
         final myInteger[] myStore = sumTrixGame.getNumbersStore();
-        final myOnClickListener onClickListener = new myOnClickListener(this, sumTrixGame, myBoard);
+        final myOnClickListener onClickListener = new myOnClickListener(this, sumTrixGame, myBoard, size);
 
         for(int i = 0; i < size; i++) {
 
