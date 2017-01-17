@@ -39,7 +39,7 @@ public class myInteger {
 
     @Override
     public String toString() {
-        return "" + integer;
+        return String.valueOf(integer);
     }
 
     public int getX() {

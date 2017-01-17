@@ -1,10 +1,14 @@
 package zmnsoft.sumtrix.SumTrix;
 
+import android.widget.Button;
+
 import java.util.Random;
 import java.util.ArrayList;
 
 public class SumTrixGame{
 
+	private final myButton[][] board;
+	private final myButton[] store;
 	private myInteger[][] myBoard;
 	private myInteger[] myStore;
 	private final int size;
@@ -15,7 +19,7 @@ public class SumTrixGame{
 	private ArrayList<myInteger> emptiesButtons;
 	private ArrayList<myInteger> occupiedButtons;
 
-	public SumTrixGame(int size)
+	public SumTrixGame(int size, myButton[][] board, myButton[] store)
 	{
 		this.setExplodes(2 * size);
 		this.size = size;
@@ -25,6 +29,8 @@ public class SumTrixGame{
 		this.startTime = System.currentTimeMillis();
 		this.emptiesButtons = new ArrayList<myInteger>();
 		this.occupiedButtons = new ArrayList<myInteger>();
+		this.board = board;
+		this.store = store;
 		buildBoard();
 	}
 
@@ -119,6 +125,7 @@ public class SumTrixGame{
 	{
 		int number = getNext();
 		myBoard[x][y].setInteger(number);
+		board[x][y].setText(String.valueOf(number));
 		occupiedButtons.add(myBoard[x][y]);
 		emptiesButtons.remove(myBoard[x][y]);
 
@@ -138,6 +145,7 @@ public class SumTrixGame{
 				if(i >= 0 && i < myBoard.length && j >= 0 && j < myBoard.length) {
 					if(myBoard[i][j].getInteger() != -1) {
 						myBoard[i][j].setInteger(-1);
+						board[i][j].setText(" ");
 						occupiedButtons.remove(myBoard[i][j]);
 						emptiesButtons.add(myBoard[i][j]);
 					}
@@ -167,11 +175,14 @@ public class SumTrixGame{
 		timesUses ++;
 		int returnedNumber = this.myStore[0].getInteger();
 
-		for (int i = 0; i < myStore.length - 1; i++)
-			myStore[i] = myStore[i+1];
+		for (int i = 0; i < myStore.length - 1; i++) {
+			myStore[i] = myStore[i + 1];
+			store[i].setText(store[i + 1].getText());
+		}
 
 		Random rand = new Random();
 		myStore[myStore.length - 1] = new myInteger(rand.nextInt(10));
+		store[store.length - 1].setText(String.valueOf(myStore[myStore.length - 1].getInteger()));
 
 		return returnedNumber;
 	}
