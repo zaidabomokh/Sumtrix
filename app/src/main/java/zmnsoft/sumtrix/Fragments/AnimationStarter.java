@@ -33,22 +33,11 @@ public class AnimationStarter extends Fragment {
         vidView.setVideoURI(Uri.parse(path));
         vidView.start();
 
-        final VideoView vidView2 = (VideoView)view.findViewById(R.id.numbers2);
-        vidView2.setVideoURI(Uri.parse(path));
-        vidView2.start();
-
-        final VideoView vidView3 = (VideoView)view.findViewById(R.id.numbers3);
-        vidView3.setVideoURI(Uri.parse(path));
-        vidView3.start();
-
-        //TODO: WHEN THE VIDEO IS FINISHED:
         vidView.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
         {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer)
             {
-                ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-
                 if(getArguments() != null) {
                     if (getArguments().getBoolean("signedIn"))
                         getActivity().getSupportFragmentManager().beginTransaction()
@@ -56,6 +45,8 @@ public class AnimationStarter extends Fragment {
 
                     else
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new StagesFragment()).commit();
+
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().show();
                 }
             }
         });

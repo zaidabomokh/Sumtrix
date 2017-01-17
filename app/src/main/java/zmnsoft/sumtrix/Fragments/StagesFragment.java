@@ -65,7 +65,7 @@ public class StagesFragment extends Fragment {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        args.putInt("size",1);
+                        args.putInt("size",3);
                         sumTrixFragment.setArguments(args);
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).commit();
                     }
@@ -92,7 +92,7 @@ public class StagesFragment extends Fragment {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        args.putInt("size",2);
+                        args.putInt("size",4);
                         sumTrixFragment.setArguments(args);
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).commit();
                     }
@@ -119,7 +119,7 @@ public class StagesFragment extends Fragment {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        args.putInt("size",3);
+                        args.putInt("size",5);
                         sumTrixFragment.setArguments(args);
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).commit();
                     }
@@ -146,7 +146,7 @@ public class StagesFragment extends Fragment {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        args.putInt("size",4);
+                        args.putInt("size",6);
                         sumTrixFragment.setArguments(args);
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).commit();
                     }
@@ -177,7 +177,7 @@ public class StagesFragment extends Fragment {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        args.putInt("size",5);
+                        args.putInt("size",7);
                         sumTrixFragment.setArguments(args);
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).commit();
                     }

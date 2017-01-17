@@ -1,7 +1,5 @@
 package zmnsoft.sumtrix.SumTrix;
 
-import android.widget.Button;
-
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -135,7 +133,7 @@ public class SumTrixGame{
 		if(emptiesButtons.isEmpty())
 			finishTime = System.currentTimeMillis();
 
-		return emptiesButtons.isEmpty();
+		return occupiedButtons.isEmpty();
 	}
 
 	private void delete(int x, int y)

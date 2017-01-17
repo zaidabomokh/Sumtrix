@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,13 @@ public class TopTenBoard extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_top_ten_board, container, false);
+
+        View decorView = getActivity().getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         final Animation animAlpha = AnimationUtils.loadAnimation(v.getContext(), R.anim.anim_scale_fast);
         Button restartBtn = (Button) v.findViewById(R.id.res_btn);

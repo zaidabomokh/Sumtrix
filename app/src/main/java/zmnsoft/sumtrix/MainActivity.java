@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         // Hide the status bar.
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
-
         getSupportActionBar().hide();
 
         /*mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -95,8 +94,7 @@ public class MainActivity extends AppCompatActivity {
         args.putBoolean("signedIn", signedIn);
 
         animationStarter.setArguments(args);
-        //getSupportFragmentManager().beginTransaction().replace(R.id.container, animationStarter).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new SumTrixFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, animationStarter).commit();
     }
 
     private int getAsciiCode(String name)
