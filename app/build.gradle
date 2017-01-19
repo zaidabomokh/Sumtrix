@@ -23,11 +23,11 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile 'junit:junit:4.12'
-
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.google.android.gms:play-services:10.0.1'
     testCompile 'org.testng:testng:6.9.6'
+    compile 'taglibs:datetime:1.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
