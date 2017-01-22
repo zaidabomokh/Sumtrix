@@ -9,7 +9,7 @@
     </style>
 
     <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/wallet_highlighted_text_holo_light</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
         <item name="android:textColor">@color/common_google_signin_btn_text_light_focused</item>
     </style>
 

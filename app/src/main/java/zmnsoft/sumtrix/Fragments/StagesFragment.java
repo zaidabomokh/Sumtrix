@@ -1,6 +1,5 @@
 package zmnsoft.sumtrix.Fragments;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,7 +18,7 @@ import zmnsoft.sumtrix.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StagesFragment extends Fragment {
+public class StagesFragment extends Fragment implements View.OnClickListener {
 
     private TextView textView;
 
@@ -32,17 +31,15 @@ public class StagesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_stages, container, false);
+        View layout = v.findViewById(R.id.layout);
+        layout.setOnClickListener(this);
 
         View decorView = getActivity().getWindow().getDecorView();
         // Hide the status bar.
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
-        View view = getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        hideKeyboard();
 
         textView = (TextView) v.findViewById(R.id.welcome_textView);
         String userNAme = getArguments().getString("UserName");
@@ -67,7 +64,7 @@ public class StagesFragment extends Fragment {
                     public void onAnimationEnd(Animation animation) {
                         args.putInt("size",3);
                         sumTrixFragment.setArguments(args);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).commit();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).addToBackStack("sumTrix").commit();
                     }
 
                     @Override
@@ -94,7 +91,7 @@ public class StagesFragment extends Fragment {
                     public void onAnimationEnd(Animation animation) {
                         args.putInt("size",4);
                         sumTrixFragment.setArguments(args);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).commit();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).addToBackStack("sumTrix").commit();
                     }
 
                     @Override
@@ -121,7 +118,7 @@ public class StagesFragment extends Fragment {
                     public void onAnimationEnd(Animation animation) {
                         args.putInt("size",5);
                         sumTrixFragment.setArguments(args);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).commit();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).addToBackStack("sumTrix").commit();
                     }
 
                     @Override
@@ -148,7 +145,7 @@ public class StagesFragment extends Fragment {
                     public void onAnimationEnd(Animation animation) {
                         args.putInt("size",6);
                         sumTrixFragment.setArguments(args);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).commit();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).addToBackStack("sumTrix").commit();
                     }
 
                     @Override
@@ -179,7 +176,7 @@ public class StagesFragment extends Fragment {
                     public void onAnimationEnd(Animation animation) {
                         args.putInt("size",7);
                         sumTrixFragment.setArguments(args);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).commit();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).addToBackStack("sumTrix").commit();
                     }
 
                     @Override
@@ -191,5 +188,18 @@ public class StagesFragment extends Fragment {
         });
 
         return v;
+    }
+
+    void hideKeyboard(){
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        hideKeyboard();
     }
 }

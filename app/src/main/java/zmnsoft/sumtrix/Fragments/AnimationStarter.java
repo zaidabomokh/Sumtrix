@@ -44,7 +44,7 @@ public class AnimationStarter extends Fragment {
                                 .remove(getActivity().getSupportFragmentManager().findFragmentById(R.id.container)).commit();
 
                     else
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new StagesFragment()).commit();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new StagesFragment()).addToBackStack("stages").commit();
 
                     ((AppCompatActivity) getActivity()).getSupportActionBar().show();
                 }

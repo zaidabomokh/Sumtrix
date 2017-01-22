@@ -51,12 +51,24 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/cast_intro_overlay_button_background_color"
+            android:backgroundTint="@color/colorAccent"
             android:text="Back To Main"
             android:typeface="serif"
             android:fontFamily="cursive"
             android:textStyle="bold|italic"
             android:id="@+id/main_btn"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/timeTracker"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="10dp"
+        android:typeface="serif"
+        android:fontFamily="cursive"
+        android:textSize="30dp"
+        android:text="0" />
 
 </FrameLayout>

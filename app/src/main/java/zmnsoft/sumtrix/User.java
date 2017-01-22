@@ -6,20 +6,28 @@ package zmnsoft.sumtrix;
 public class User {
 
     private String ID;
+    private String Name;
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public String getName() {
+        return Name;
+    }
 
     public String getID() {
         return ID;
-    }
-
-    public User(String ID) {
-        this.ID = ID;
     }
 
     public void setID(String ID) {
         this.ID = ID;
     }
 
-    public User() {}
+    public User(String user, String id) {
+        setID(id);
+        setName(user);
+    }
 
     @Override
     public String toString() {

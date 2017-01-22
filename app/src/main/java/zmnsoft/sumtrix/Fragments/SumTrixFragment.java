@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -17,6 +16,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.joda.time.DateTime;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import zmnsoft.sumtrix.R;
 import zmnsoft.sumtrix.SumTrix.SumTrixGame;
 import zmnsoft.sumtrix.SumTrix.myButton;
@@ -44,6 +50,34 @@ public class SumTrixFragment extends Fragment {
         decorView.setSystemUiVisibility(uiOptions);
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+
+        final TextView timeTracker = (TextView) v.findViewById(R.id.timeTracker);
+
+        Thread t = new Thread() {
+
+            int x= 0;
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);if (getActivity() == null){
+                            break;
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                               // TODO
+                                timeTracker.setText("" + x++);
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t.start();
 
         LinearLayout storeLayout = (LinearLayout) v.findViewById(R.id.storeLayout);
         GridLayout gridLayout = (GridLayout) v.findViewById(R.id.boardLayout);
