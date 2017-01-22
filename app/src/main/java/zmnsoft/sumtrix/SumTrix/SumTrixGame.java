@@ -1,33 +1,36 @@
 package zmnsoft.sumtrix.SumTrix;
 
-import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class SumTrixGame
-{
+public class SumTrixGame{
+
+	private final myButton[][] board;
+	private final myButton[] store;
 	private myInteger[][] myBoard;
 	private myInteger[] myStore;
 	private final int size;
 	private int timesUses;
-	private Date start;
-	private Date finish;
+	private Date startTime;
+	private Date finishTime;
 	private int explodes;
 	private ArrayList<myInteger> emptiesButtons;
 	private ArrayList<myInteger> occupiedButtons;
 
-	public SumTrixGame(int size)
+	public SumTrixGame(int size, myButton[][] board, myButton[] store)
 	{
 		this.setExplodes(2 * size);
 		this.size = size;
 		this.myBoard = new myInteger[size][size];
 		this.myStore = new myInteger[size];
 		this.timesUses = 0;
-		start = new Date();
+		startTime = new Date();
 		this.emptiesButtons = new ArrayList<myInteger>();
 		this.occupiedButtons = new ArrayList<myInteger>();
+		this.board = board;
+		this.store = store;
 		buildBoard();
 	}
 
@@ -37,9 +40,9 @@ public class SumTrixGame
 			return null;
 
 		int[] res = new int[2];
-		int index = 0;
-		index = tryHelpStreak(res, index, myStore[0].getInteger());
-		if(index == -1)
+		myInteger index = new myInteger(0);
+
+		if(!tryHelpStreak(res, index, myStore[0].getInteger()))
 			return null;
 
 		else
@@ -59,26 +62,22 @@ public class SumTrixGame
 							count ++;
 						}
 
-			if(count < index)
+			if(count < index.getInteger())
 				return null;
 
-			int[] indexes = new int[index];
-			for (int i = 0; i < indexes.length; i++)
-				indexes[i] = -1;
-
-			findPlaces(places, indexes, x, y, 0, 0);
-			return indexes;
+			return findPlaces(places, x, y, 0);
 		}
 	}
 
-	private boolean findPlaces(ArrayList<int[]> places, int[] indexes, int x, int y, int i, int j) {
-		return false;
+	private int[] findPlaces(ArrayList<int[]> places, int x, int y, int i)
+	{
+		return null;
 	}
 
-	public int tryHelpStreak(int[] res, int index, int acc)
+	public boolean tryHelpStreak(int[] res, myInteger index, int acc)
 	{
-		if(index > size - 1)
-			return -1;
+		if(index.getInteger() > size - 1)
+			return false;
 
 		for (myInteger integer : emptiesButtons)
 		{
@@ -86,11 +85,13 @@ public class SumTrixGame
 			{
 				res[0] = integer.getX();
 				res[1] = integer.getY();
-				return index + 1;
+				return true;
 			}
 		}
 
-		return tryHelpStreak(res, index + 1, (acc + myStore[index + 1].getInteger()) % 10);
+		index.increement();
+
+		return tryHelpStreak(res, index, (acc + myStore[index.getInteger()].getInteger()) % 10);
 	}
 
 	private void buildBoard()
@@ -124,6 +125,7 @@ public class SumTrixGame
 	{
 		int number = getNext();
 		myBoard[x][y].setInteger(number);
+		board[x][y].setText(String.valueOf(number));
 		occupiedButtons.add(myBoard[x][y]);
 		emptiesButtons.remove(myBoard[x][y]);
 
@@ -131,9 +133,9 @@ public class SumTrixGame
 			delete(x, y);
 
 		if(emptiesButtons.isEmpty())
-			finish = new Date();
+			finishTime = new Date();
 
-		return emptiesButtons.size() == size * size;
+		return occupiedButtons.isEmpty();
 	}
 
 	private void delete(int x, int y)
@@ -143,6 +145,7 @@ public class SumTrixGame
 				if(i >= 0 && i < myBoard.length && j >= 0 && j < myBoard.length) {
 					if(myBoard[i][j].getInteger() != -1) {
 						myBoard[i][j].setInteger(-1);
+						board[i][j].setText(" ");
 						occupiedButtons.remove(myBoard[i][j]);
 						emptiesButtons.add(myBoard[i][j]);
 					}
@@ -153,7 +156,6 @@ public class SumTrixGame
 	{
 		int sum = 0;
 		int occupied = -1;
-		int empties = 0;
 
 		for (int i = x-1; i <= x+1; i++)
 			for (int j = y-1; j <= y+1; j++)
@@ -164,7 +166,6 @@ public class SumTrixGame
 						sum += myBoard[i][j].getInteger();
 						occupied ++;
 					}
-					else empties ++;
 				}
 
 		if(myBoard[x][y].getInteger() != -1)
@@ -173,7 +174,7 @@ public class SumTrixGame
 		if(sum % 10 == number)
 			if(number != 0)
 				return true;
-			else if(empties < occupied) return true;
+			else if(occupied != 0) return true;
 
 		return false;
 	}
@@ -183,11 +184,14 @@ public class SumTrixGame
 		timesUses ++;
 		int returnedNumber = this.myStore[0].getInteger();
 
-		for (int i = 0; i < myStore.length - 1; i++)
-			myStore[i] = myStore[i+1];
+		for (int i = 0; i < myStore.length - 1; i++) {
+			myStore[i] = myStore[i + 1];
+			store[i].setText(store[i + 1].getText());
+		}
 
 		Random rand = new Random();
 		myStore[myStore.length - 1] = new myInteger(rand.nextInt(10));
+		store[store.length - 1].setText(String.valueOf(myStore[myStore.length - 1].getInteger()));
 
 		return returnedNumber;
 	}
@@ -231,15 +235,14 @@ public class SumTrixGame
 	}
 
 	public long getTimeElapsed() {
-		//return (long) Math.abs((finishTime - startTime) / 1000);
-		long duration  = finish.getTime() - start.getTime();
+		long duration  = finishTime.getTime() - startTime.getTime();
 		long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
 		return diffInSeconds;
 	}
 
 	public int getScore() {
-		if(finish == null)
-			finish = new Date();
+		if(finishTime == null)
+			finishTime = new Date();
 		return (int) ((Math.pow(size, 2*size)) / (timesUses * getTimeElapsed()));
 	}
 
