@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
-
 import zmnsoft.sumtrix.R;
 import zmnsoft.sumtrix.SumTrix.SumTrixGame;
 import zmnsoft.sumtrix.SumTrix.myButton;
