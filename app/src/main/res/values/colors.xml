@@ -3,5 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="myGrey">#1F000000</color>
+    <color name="myBlue">#BB33B5E5</color>
+    <color name="myHoloBlueLight">#7dbdd4</color>
     <color name="black">#000</color>
 </resources>

@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,8 @@ public class TopTenBoard extends Fragment {
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
+        Toast.makeText(getContext(), "" + getArguments().getInt("time"), Toast.LENGTH_SHORT).show();
+
         final Animation animAlpha = AnimationUtils.loadAnimation(v.getContext(), R.anim.anim_scale_fast);
         Button restartBtn = (Button) v.findViewById(R.id.res_btn);
         restartBtn.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +65,7 @@ public class TopTenBoard extends Fragment {
                         Bundle args = new Bundle();
                         args.putInt("size", getArguments().getInt("size"));
                         sumTrixFragment.setArguments(args);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).commit();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).addToBackStack("sumTrix").commit();
                     }
 
                     @Override
@@ -78,6 +81,26 @@ public class TopTenBoard extends Fragment {
             @Override
             public void onClick(View view) {
                 view.startAnimation(animAlpha);
+                animAlpha.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        StagesFragment stagesFragment = new StagesFragment();
+                        Bundle args = new Bundle();
+                        args.putString("UserName", getArguments().getString("UserName"));
+                        stagesFragment.setArguments(args);
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, stagesFragment).commit();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
             }
         });
 

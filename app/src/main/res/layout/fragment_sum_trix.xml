@@ -41,7 +41,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/common_google_signin_btn_text_dark_disabled"
+            android:backgroundTint="@color/myGrey"
             android:text="Streak Help"
             android:typeface="serif"
             android:fontFamily="cursive"
@@ -51,7 +51,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/myBlue"
             android:text="Back To Main"
             android:typeface="serif"
             android:fontFamily="cursive"

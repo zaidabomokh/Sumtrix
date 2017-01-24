@@ -3,9 +3,7 @@ package zmnsoft.sumtrix;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,18 +11,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import zmnsoft.sumtrix.Fragments.AnimationStarter;
 import zmnsoft.sumtrix.Fragments.StagesFragment;
-import zmnsoft.sumtrix.Fragments.SumTrixFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         FirebaseAuth.getInstance().addAuthStateListener(mAuthStateListener);
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -60,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    // TODO: 1/23/2017 intent to the log in activity
                     Toast.makeText(MainActivity.this, "Not Logged in", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             void hideKeyboard(){
                 View view = MainActivity.this.getCurrentFocus();
                 if (view != null) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService( INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
             }
@@ -85,9 +82,6 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     else {
-                        //getSupportActionBar().show();
-
-
                         FirebaseAuth.getInstance().signInAnonymously().addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -108,8 +102,12 @@ public class MainActivity extends AppCompatActivity {
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, stagesFragment).commit();
                                 editText.setVisibility(View.GONE);
 
-                                saveUserToDb(UserName);
+//                                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//                                if(currentUser != null) {
+//                                    User user = new User(currentUser.getUid(), currentUser.getDisplayName());
+//                                }
 
+                                saveUserToDb(UserName);
                             }
                         });
 
@@ -137,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private User getUserFromSharedPreferences(){
+    private User getUserFromSharedPreferences() {
         SharedPreferences prefs = getSharedPreferences("sumtrix", MODE_PRIVATE);
         String user = prefs.getString("User", null);
         String id = prefs.getString("UserID", null);

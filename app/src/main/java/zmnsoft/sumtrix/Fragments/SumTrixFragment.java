@@ -25,9 +25,12 @@ import java.util.Date;
 
 import zmnsoft.sumtrix.R;
 import zmnsoft.sumtrix.SumTrix.SumTrixGame;
+import zmnsoft.sumtrix.SumTrix.TimeTracker;
 import zmnsoft.sumtrix.SumTrix.myButton;
 import zmnsoft.sumtrix.SumTrix.myInteger;
 import zmnsoft.sumtrix.SumTrix.myOnClickListener;
+
+import static android.R.attr.x;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,11 +55,8 @@ public class SumTrixFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         final TextView timeTracker = (TextView) v.findViewById(R.id.timeTracker);
-
+        final TimeTracker tracker = new TimeTracker(0);
         Thread t = new Thread() {
-
-            int x= 0;
-
             @Override
             public void run() {
                 try {
@@ -67,8 +67,8 @@ public class SumTrixFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                               // TODO
-                                timeTracker.setText("" + x++);
+                                tracker.increment();
+                                timeTracker.setText(tracker.toString());
                             }
                         });
                     }
@@ -82,7 +82,6 @@ public class SumTrixFragment extends Fragment {
         LinearLayout storeLayout = (LinearLayout) v.findViewById(R.id.storeLayout);
         GridLayout gridLayout = (GridLayout) v.findViewById(R.id.boardLayout);
         int size = getArguments().getInt("size");
-        //int size = 7;
         gridLayout.setColumnCount(size);
         gridLayout.setRowCount(size);
 
@@ -92,7 +91,7 @@ public class SumTrixFragment extends Fragment {
         myButton button;
         final myInteger[][] myBoard = sumTrixGame.getMyMatrix();
         final myInteger[] myStore = sumTrixGame.getNumbersStore();
-        final myOnClickListener onClickListener = new myOnClickListener(this, sumTrixGame, myBoard, size);
+        final myOnClickListener onClickListener = new myOnClickListener(this, sumTrixGame, myBoard, size, tracker, getArguments().getString("UserName"));
 
         Button helpBtn = (Button) v.findViewById(R.id.help_btn);
         final Vibrator vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);

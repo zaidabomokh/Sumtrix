@@ -26,7 +26,8 @@
         android:layout_gravity="center_horizontal">
 
         <Button
-            android:theme="@style/AppTheme.Button"
+            android:fontFamily="cursive"
+            android:backgroundTint="@color/myHoloBlueLight"
             android:textStyle="bold|italic"
             android:typeface="serif"
             android:id="@+id/btn1"
@@ -42,7 +43,8 @@
             android:layout_column="0" />
 
         <Button
-            android:theme="@style/AppTheme.Button"
+            android:fontFamily="cursive"
+            android:backgroundTint="@color/myHoloBlueLight"
             android:textStyle="bold|italic"
             android:typeface="serif"
             android:id="@+id/btn2"
@@ -58,7 +60,8 @@
             android:layout_column="1" />
 
         <Button
-            android:theme="@style/AppTheme.Button"
+            android:fontFamily="cursive"
+            android:backgroundTint="@color/myHoloBlueLight"
             android:textStyle="bold|italic"
             android:typeface="serif"
             android:id="@+id/btn3"
@@ -74,7 +77,8 @@
             android:layout_column="2" />
 
         <Button
-            android:theme="@style/AppTheme.Button"
+            android:fontFamily="cursive"
+            android:backgroundTint="@color/myHoloBlueLight"
             android:textStyle="bold|italic"
             android:typeface="serif"
             android:id="@+id/btn4"
@@ -90,7 +94,8 @@
             android:layout_column="1" />
 
         <Button
-            android:theme="@style/AppTheme.Button"
+            android:fontFamily="cursive"
+            android:backgroundTint="@color/myHoloBlueLight"
             android:textStyle="bold|italic"
             android:typeface="serif"
             android:id="@+id/btn5"

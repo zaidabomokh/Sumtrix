@@ -8,12 +8,9 @@ public class User {
     private String ID;
     private String Name;
 
-    public void setName(String name) {
+    public User(String ID, String name) {
+        this.ID = ID;
         Name = name;
-    }
-
-    public String getName() {
-        return Name;
     }
 
     public String getID() {
@@ -24,13 +21,20 @@ public class User {
         this.ID = ID;
     }
 
-    public User(String user, String id) {
-        setID(id);
-        setName(user);
+    public String getName() {
+        return Name;
     }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
 
     @Override
     public String toString() {
-        return "User name : " + ID;
+        return "User{" +
+                "ID='" + ID + '\'' +
+                ", Name='" + Name + '\'' +
+                '}';
     }
 }
