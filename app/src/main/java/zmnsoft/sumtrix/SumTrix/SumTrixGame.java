@@ -1,5 +1,6 @@
 package zmnsoft.sumtrix.SumTrix;
 
+import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -9,28 +10,28 @@ public class SumTrixGame{
 
 	private final myButton[][] board;
 	private final myButton[] store;
+	private final TimeTracker timeTracker;
 	private myInteger[][] myBoard;
 	private myInteger[] myStore;
 	private final int size;
 	private int timesUses;
-	private Date startTime;
-	private Date finishTime;
+	private int finishTime;
 	private int explodes;
 	private ArrayList<myInteger> emptiesButtons;
 	private ArrayList<myInteger> occupiedButtons;
 
-	public SumTrixGame(int size, myButton[][] board, myButton[] store)
+	public SumTrixGame(int size, myButton[][] board, myButton[] store, TimeTracker timeTracker)
 	{
 		this.setExplodes(2 * size);
 		this.size = size;
 		this.myBoard = new myInteger[size][size];
 		this.myStore = new myInteger[size];
 		this.timesUses = 0;
-		startTime = new Date();
 		this.emptiesButtons = new ArrayList<myInteger>();
 		this.occupiedButtons = new ArrayList<myInteger>();
 		this.board = board;
 		this.store = store;
+		this.timeTracker = timeTracker;
 		buildBoard();
 	}
 
@@ -133,7 +134,7 @@ public class SumTrixGame{
 			delete(x, y);
 
 		if(emptiesButtons.isEmpty())
-			finishTime = new Date();
+			finishTime = timeTracker.getStart();
 
 		return occupiedButtons.isEmpty();
 	}
@@ -235,14 +236,10 @@ public class SumTrixGame{
 	}
 
 	public long getTimeElapsed() {
-		long duration  = finishTime.getTime() - startTime.getTime();
-		long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
-		return diffInSeconds;
+		return finishTime;
 	}
 
 	public int getScore() {
-		if(finishTime == null)
-			finishTime = new Date();
 		return (int) ((Math.pow(size, 2*size)) / (timesUses * getTimeElapsed()));
 	}
 

@@ -3,14 +3,22 @@ package zmnsoft.sumtrix;
 /**
  * Created by ANDROID on 14/12/2016.
  */
+
+//pojo
+
 public class User {
 
     private String ID;
     private String Name;
+    private int highScore;
+
+    public User() {
+    }
 
     public User(String ID, String name) {
         this.ID = ID;
         Name = name;
+        highScore = -1;
     }
 
     public String getID() {
@@ -29,6 +37,13 @@ public class User {
         Name = name;
     }
 
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+    }
 
     @Override
     public String toString() {

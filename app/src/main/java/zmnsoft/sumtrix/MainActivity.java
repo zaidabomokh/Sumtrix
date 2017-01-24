@@ -102,15 +102,14 @@ public class MainActivity extends AppCompatActivity {
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, stagesFragment).commit();
                                 editText.setVisibility(View.GONE);
 
-//                                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//                                if(currentUser != null) {
-//                                    User user = new User(currentUser.getUid(), currentUser.getDisplayName());
-//                                }
+                                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                if(currentUser != null) {
+                                    User user = new User(currentUser.getUid(), currentUser.getDisplayName());
+                                }
 
                                 saveUserToDb(UserName);
                             }
                         });
-
 
                         return true;
                     }
@@ -145,11 +144,12 @@ public class MainActivity extends AppCompatActivity {
     private void saveUserToDb(final String userName) {
 
         final SharedPreferences prefs = getSharedPreferences("sumtrix", MODE_PRIVATE);
-
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        User user = new User(userName,userName);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").push();
         final String key = ref.getKey();
 
-        ref.setValue(userName).addOnSuccessListener(new OnSuccessListener<Void>() {
+        ref.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_SHORT).show();
@@ -167,11 +167,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private int getAsciiCode(String name)
-    {
+    private int getAsciiCode(String name) {
         StringBuilder str = new StringBuilder();
 
-        for (int i=0; i<name.length(); i++)
+        for (int i = 0; i < name.length(); i++)
             str.append((int)(name.charAt(i)));
 
         return Integer.parseInt(str.toString());

@@ -10,9 +10,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-
 import android.widget.TextView;
-
 import zmnsoft.sumtrix.R;
 
 /**

@@ -3,7 +3,6 @@ package zmnsoft.sumtrix.SumTrix;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-
 import zmnsoft.sumtrix.Fragments.StagesFragment;
 import zmnsoft.sumtrix.Fragments.SumTrixFragment;
 import zmnsoft.sumtrix.Fragments.TopTenBoard;
@@ -52,8 +51,6 @@ public final class myOnClickListener implements View.OnClickListener {
             args.putString("UserName", sumTrixFragment.getArguments().getString("UserName"));
             stagesFragment.setArguments(args);
             sumTrixFragment.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, stagesFragment).commit();
-//            sumTrixFragment.getActivity().getSupportFragmentManager().beginTransaction()
-//                    .remove(sumTrixFragment.getActivity().getSupportFragmentManager().findFragmentById(R.id.container)).commit();
         }
     }
 }

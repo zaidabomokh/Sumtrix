@@ -11,26 +11,19 @@ import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.joda.time.DateTime;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import zmnsoft.sumtrix.R;
 import zmnsoft.sumtrix.SumTrix.SumTrixGame;
 import zmnsoft.sumtrix.SumTrix.TimeTracker;
 import zmnsoft.sumtrix.SumTrix.myButton;
 import zmnsoft.sumtrix.SumTrix.myInteger;
 import zmnsoft.sumtrix.SumTrix.myOnClickListener;
-
-import static android.R.attr.x;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,9 +54,8 @@ public class SumTrixFragment extends Fragment {
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(1000);if (getActivity() == null){
-                            break;
-                        }
+                        Thread.sleep(1000); // 1 second
+                        if (getActivity() == null){ break; }
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -72,8 +64,7 @@ public class SumTrixFragment extends Fragment {
                             }
                         });
                     }
-                } catch (InterruptedException e) {
-                }
+                } catch (InterruptedException e) {}
             }
         };
 
@@ -87,7 +78,7 @@ public class SumTrixFragment extends Fragment {
 
         myButton[][] board = new myButton[size][size];
         myButton[] store = new myButton[size];
-        SumTrixGame sumTrixGame = new SumTrixGame(size, board, store);
+        SumTrixGame sumTrixGame = new SumTrixGame(size, board, store, tracker);
         myButton button;
         final myInteger[][] myBoard = sumTrixGame.getMyMatrix();
         final myInteger[] myStore = sumTrixGame.getNumbersStore();
@@ -115,27 +106,13 @@ public class SumTrixFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 vibe.vibrate(100);
+                StagesFragment stagesFragment = new StagesFragment();
+                Bundle args = new Bundle();
+                args.putString("UserName", getArguments().getString("UserName"));
+                stagesFragment.setArguments(args);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, stagesFragment).commit();
             }
         });
-
-        /*mainBtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_UP)
-                {
-                    //up event
-                    mainBtn.setBackgroundResource(R.color.colorAccent);
-                    return true;
-                }
-                if(event.getAction() == MotionEvent.ACTION_DOWN)
-                {
-                    //down event
-                    mainBtn.setBackgroundResource(R.color.black);
-                    return true;
-                }
-                return false;
-            }
-        });*/
 
         for(int i = 0; i < size; i++) {
 

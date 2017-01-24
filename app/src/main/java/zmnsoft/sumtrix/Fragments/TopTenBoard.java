@@ -14,11 +14,16 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import zmnsoft.sumtrix.R;
+import zmnsoft.sumtrix.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +35,6 @@ public class TopTenBoard extends Fragment {
     public TopTenBoard() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -104,7 +108,7 @@ public class TopTenBoard extends Fragment {
             }
         });
 
-        LinearLayout myLinearLayout = (LinearLayout) v.findViewById(R.id.textViews_Layout);
+        final LinearLayout myLinearLayout = (LinearLayout) v.findViewById(R.id.textViews_Layout);
         textViews = new ArrayList<TextView>();
 
         TextView newText = new TextView(getContext());
@@ -117,18 +121,31 @@ public class TopTenBoard extends Fragment {
         myLinearLayout.addView(newText);
         textViews.add(newText);
 
-        for (int i = 0; i < 10; i++)
-        {
-            newText = new TextView(getContext());
-            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            newText.setLayoutParams(params);
-            newText.setTextSize(21);
-            newText.setTextColor(Color.CYAN);
-            newText.setTypeface(Typeface.MONOSPACE, Typeface.BOLD_ITALIC);
-            newText.setText(String.format("%s%16s", "Zaid", "456"));
-            myLinearLayout.addView(newText);
-            textViews.add(newText);
-        }
+        DatabaseReference users = FirebaseDatabase.getInstance().getReference().child("Users");
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child: dataSnapshot.getChildren()) {
+                    User user = child.getValue(User.class);
+
+                    TextView newText2;
+                    newText2 = new TextView(getContext());
+                    LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    newText2.setLayoutParams(params2);
+                    newText2.setTextSize(21);
+                    newText2.setTextColor(Color.CYAN);
+                    newText2.setTypeface(Typeface.MONOSPACE, Typeface.BOLD_ITALIC);
+                    newText2.setText(String.format("%s%16s", user.getName(), user.getHighScore()));
+                    myLinearLayout.addView(newText2);
+                    textViews.add(newText2);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         return v;
     }
