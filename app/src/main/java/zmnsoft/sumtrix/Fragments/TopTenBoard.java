@@ -135,7 +135,8 @@ public class TopTenBoard extends Fragment {
                     newText2.setTextSize(21);
                     newText2.setTextColor(Color.CYAN);
                     newText2.setTypeface(Typeface.MONOSPACE, Typeface.BOLD_ITALIC);
-                    newText2.setText(String.format("%s%16s", user.getName(), user.getHighScore()));
+                    int spaces = 19 - user.getName().length();
+                    newText2.setText(String.format("%s%" + spaces + "s", user.getName(), user.getHighScore()));
                     myLinearLayout.addView(newText2);
                     textViews.add(newText2);
                     if(++i == 10) break;
