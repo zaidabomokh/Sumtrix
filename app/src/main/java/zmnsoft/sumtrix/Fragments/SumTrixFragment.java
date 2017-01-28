@@ -47,6 +47,8 @@ public class SumTrixFragment extends Fragment {
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
+        TextView explodes = (TextView) v.findViewById(R.id.explodes);
+
         final TextView timeTracker = (TextView) v.findViewById(R.id.timeTracker);
         final TimeTracker tracker = new TimeTracker(0);
         Thread t = new Thread() {
@@ -82,7 +84,7 @@ public class SumTrixFragment extends Fragment {
         myButton button;
         final myInteger[][] myBoard = sumTrixGame.getMyMatrix();
         final myInteger[] myStore = sumTrixGame.getNumbersStore();
-        final myOnClickListener onClickListener = new myOnClickListener(this, sumTrixGame, myBoard, size, tracker, getArguments().getString("UserName"));
+        final myOnClickListener onClickListener = new myOnClickListener(this, sumTrixGame, myBoard, size, tracker, getArguments().getString("UserName"), explodes);
 
         Button helpBtn = (Button) v.findViewById(R.id.help_btn);
         final Vibrator vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
@@ -149,7 +151,7 @@ public class SumTrixFragment extends Fragment {
                 button.setLayoutParams(new ViewGroup.LayoutParams(151, 151));
                 board[i][j] = button;
                 gridLayout.addView(button);
-
+                explodes.setText(String.valueOf(sumTrixGame.getExplodes()));
                 button.setOnClickListener(onClickListener);
             }
         }

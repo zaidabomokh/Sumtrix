@@ -125,9 +125,9 @@ public class TopTenBoard extends Fragment {
         users.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                int  i = 0;
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                     User user = child.getValue(User.class);
-
                     TextView newText2;
                     newText2 = new TextView(getContext());
                     LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -138,6 +138,7 @@ public class TopTenBoard extends Fragment {
                     newText2.setText(String.format("%s%16s", user.getName(), user.getHighScore()));
                     myLinearLayout.addView(newText2);
                     textViews.add(newText2);
+                    if(++i == 10) break;
                 }
             }
 

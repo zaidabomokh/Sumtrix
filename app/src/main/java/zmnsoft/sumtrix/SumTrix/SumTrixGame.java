@@ -22,7 +22,7 @@ public class SumTrixGame{
 
 	public SumTrixGame(int size, myButton[][] board, myButton[] store, TimeTracker timeTracker)
 	{
-		this.setExplodes(2 * size);
+		explodes = 2 * size * size;
 		this.size = size;
 		this.myBoard = new myInteger[size][size];
 		this.myStore = new myInteger[size];
@@ -37,9 +37,6 @@ public class SumTrixGame{
 
 	public int[] streakHelp()
 	{
-		if(explodes == 0)
-			return null;
-
 		int[] res = new int[2];
 		myInteger index = new myInteger(0);
 
@@ -133,14 +130,15 @@ public class SumTrixGame{
 		if(check(number, x, y))
 			delete(x, y);
 
-		if(emptiesButtons.isEmpty())
+		if(emptiesButtons.isEmpty() || explodes == 0)
 			finishTime = timeTracker.getStart();
 
-		return occupiedButtons.isEmpty();
+		return occupiedButtons.isEmpty() || explodes == 0;
 	}
 
 	private void delete(int x, int y)
 	{
+		explodes --;
 		for (int i = x-1; i <= x+1; i++)
 			for (int j = y-1; j <= y+1; j++)
 				if(i >= 0 && i < myBoard.length && j >= 0 && j < myBoard.length) {
@@ -180,7 +178,7 @@ public class SumTrixGame{
 		return false;
 	}
 
-	public int getNext()
+	private int getNext()
 	{
 		timesUses ++;
 		int returnedNumber = this.myStore[0].getInteger();
