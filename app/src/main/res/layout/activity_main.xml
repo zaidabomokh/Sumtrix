@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="zmnsoft.sumtrix.MainActivity"
+    tools:context="zmnsoft.sumtrix.Activities.MainActivity"
     android:id="@+id/container"
     android:background="@drawable/main_background">
 

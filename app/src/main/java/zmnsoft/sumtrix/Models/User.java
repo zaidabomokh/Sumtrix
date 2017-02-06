@@ -1,4 +1,4 @@
-package zmnsoft.sumtrix;
+package zmnsoft.sumtrix.Models;
 
 /**
  * Created by ANDROID on 14/12/2016.

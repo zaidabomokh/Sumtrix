@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import zmnsoft.sumtrix.R;
-import zmnsoft.sumtrix.User;
+import zmnsoft.sumtrix.Models.User;
 
 /**
  * A simple {@link Fragment} subclass.

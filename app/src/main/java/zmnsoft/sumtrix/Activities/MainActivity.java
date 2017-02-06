@@ -1,4 +1,4 @@
-package zmnsoft.sumtrix;
+package zmnsoft.sumtrix.Activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import zmnsoft.sumtrix.Fragments.AnimationStarter;
 import zmnsoft.sumtrix.Fragments.StagesFragment;
+import zmnsoft.sumtrix.Models.User;
+import zmnsoft.sumtrix.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -145,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
         final SharedPreferences prefs = getSharedPreferences("sumtrix", MODE_PRIVATE);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        User user = new User(userName,userName);
+        User user = new User(userName, userName);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").push();
         final String key = ref.getKey();
 

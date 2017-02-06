@@ -47,7 +47,7 @@ public final class myOnClickListener implements View.OnClickListener {
                 sumTrixFragment.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, topTenBoard).commit();
             }
         }
-        else Toast.makeText(view.getContext(), "Can't insert number here", Toast.LENGTH_SHORT).show();
+//        else Toast.makeText(view.getContext(), "Can't insert number here", Toast.LENGTH_SHORT).show();
 
         if(sumTrixGame.isStuck()) { //TODO : finish the game when player is stuck
             Toast.makeText(view.getContext(), "You Are Stuck", Toast.LENGTH_SHORT).show();
