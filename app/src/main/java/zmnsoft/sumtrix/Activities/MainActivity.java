@@ -1,14 +1,19 @@
 package zmnsoft.sumtrix.Activities;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -18,125 +23,116 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import java.io.Serializable;
 import zmnsoft.sumtrix.Fragments.AnimationStarter;
 import zmnsoft.sumtrix.Fragments.StagesFragment;
+import zmnsoft.sumtrix.Models.AnimationListener;
 import zmnsoft.sumtrix.Models.User;
 import zmnsoft.sumtrix.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AnimationListener {
 
-    FirebaseAuth.AuthStateListener mAuthStateListener;
-    private boolean isFirst = true;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        FirebaseAuth.getInstance().addAuthStateListener(mAuthStateListener);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        FirebaseAuth.getInstance().removeAuthStateListener(mAuthStateListener);
-    }
+    private SharedPreferences sharedPreferences;
+    private String userName;
+    private boolean isFirst = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        AnimationStarter animationStarter = new AnimationStarter();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, animationStarter).addToBackStack("animationStarter").commit();
+
         View decorView = getWindow().getDecorView();
+
+        //init field:
+        sharedPreferences = getSharedPreferences("USER_NAME" , Context.MODE_PRIVATE);
+        userName = loadData();
+
         // Hide the status bar.
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
         getSupportActionBar().hide();
-
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() != null){
-                    Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    // TODO: 1/23/2017 intent to the log in activity
-                    Toast.makeText(MainActivity.this, "Not Logged in", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-
-        final EditText editText = (EditText) findViewById(R.id.UserName_edt);
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            void hideKeyboard(){
-                View view = MainActivity.this.getCurrentFocus();
-                if (view != null) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
-            }
-
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if(i == EditorInfo.IME_ACTION_DONE) {
-                    if(editText.getText().length() > 5 || editText.getText().length() == 0) {
-                        Toast.makeText(MainActivity.this, "Insert correct name", Toast.LENGTH_SHORT).show();
-                        return false;
-                    }
-
-                    else {
-                        FirebaseAuth.getInstance().signInAnonymously().addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(MainActivity.this, "onFailure Logged in", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                Toast.makeText(MainActivity.this, "onSuccess Logged in", Toast.LENGTH_SHORT).show();
-
-                                String UserName = editText.getText().toString();
-                                Toast.makeText(MainActivity.this, "Welcome " + UserName, Toast.LENGTH_SHORT).show();
-                                StagesFragment stagesFragment = new StagesFragment();
-                                Bundle args = new Bundle();
-                                hideKeyboard();
-                                args.putString("UserName", UserName);
-                                stagesFragment.setArguments(args);
-                                getSupportFragmentManager().beginTransaction().replace(R.id.container, stagesFragment).commit();
-                                editText.setVisibility(View.GONE);
-
-                                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                                if(currentUser != null) {
-                                    User user = new User(currentUser.getUid(), currentUser.getDisplayName());
-                                }
-
-                                saveUserToDb(UserName);
-                            }
-                        });
-
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-
-
-        AnimationStarter animationStarter = new AnimationStarter();
-        Bundle args = new Bundle();
-
-        //  Put the fragment Acronyms' name converted from letters to Ascii
-        int ID = getAsciiCode("AS");
-        boolean signedIn = true;
-
-        args.putInt("ID", ID);
-        args.putBoolean("signedIn", signedIn);
-
-        animationStarter.setArguments(args);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, animationStarter).addToBackStack("animationStarter").commit();
     }
 
+    public void onAnimationFinishListener()
+    {
+        final EditText editText = (EditText) findViewById(R.id.UserName_edt);
 
-    private User getUserFromSharedPreferences() {
+        if(userName.equals(" ")){
+            Button LoginBtn = (Button) findViewById(R.id.LoginBtn);
+            LoginBtn.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    String UserName = editText.getText().toString();
+                    if(UserName != null && UserName.length() <= 5 && UserName.length() > 0) {
+                        hideKeyboard();
+                        saveData(UserName);
+                        Toast.makeText(MainActivity.this, "Welcome " + UserName, Toast.LENGTH_SHORT).show();
+                        isFirst = true;
+                        StagesFragment stagesFragment = new StagesFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, stagesFragment).commit();
+                        editText.setVisibility(View.GONE);
+                    }
+                }
+            });
+        }
+
+        else {
+            hideKeyboard();
+            StagesFragment stagesFragment = new StagesFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, stagesFragment).commit();
+            editText.setVisibility(View.GONE);
+        }
+    }
+
+    public void hideKeyboard() {
+        View view = MainActivity.this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    private String loadData() {
+        String data = sharedPreferences.getString("USER_NAME", " ");
+        return data;
+    }
+
+    private void showNickNameDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        alertDialog.setTitle("USER INFO");
+        alertDialog.setMessage("Enter User Name");
+
+        final EditText input = new EditText(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        alertDialog.setView(input);
+
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Save",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        userName = input.getText().toString();
+
+                        Toast.makeText(MainActivity.this, "Welcome, " + userName, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        alertDialog.show();
+    }
+
+    private void saveData(String data) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("USER_NAME", data);
+        editor.commit();
+    }
+
+    /*private User getUserFromSharedPreferences() {
         SharedPreferences prefs = getSharedPreferences("sumtrix", MODE_PRIVATE);
         String user = prefs.getString("User", null);
         String id = prefs.getString("UserID", null);
@@ -167,14 +163,5 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Not Saved Error " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private int getAsciiCode(String name) {
-        StringBuilder str = new StringBuilder();
-
-        for (int i = 0; i < name.length(); i++)
-            str.append((int)(name.charAt(i)));
-
-        return Integer.parseInt(str.toString());
-    }
+    }*/
 }

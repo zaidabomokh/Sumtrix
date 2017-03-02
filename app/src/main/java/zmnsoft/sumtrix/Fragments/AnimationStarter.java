@@ -1,5 +1,6 @@
 package zmnsoft.sumtrix.Fragments;
 
+import android.app.Activity;
 import android.media.MediaPlayer;
 import android.media.session.MediaController;
 import android.net.Uri;
@@ -11,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.VideoView;
-
+import java.io.Serializable;
+import zmnsoft.sumtrix.Models.AnimationListener;
 import zmnsoft.sumtrix.R;
 
 
 public class AnimationStarter extends Fragment {
 
+    private AnimationListener listener;
     private int ID;
     public AnimationStarter() {
         // Required empty public constructor
@@ -38,19 +41,32 @@ public class AnimationStarter extends Fragment {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer)
             {
-                if(getArguments() != null) {
-                    if (getArguments().getBoolean("signedIn"))
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .remove(getActivity().getSupportFragmentManager().findFragmentById(R.id.container)).commit();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .remove(getActivity().getSupportFragmentManager().findFragmentById(R.id.container)).commit();
 
-                    else
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new StagesFragment()).addToBackStack("stages").commit();
+                /*assert getArguments()!=null;
+                AnimationListener listener = (AnimationListener) getArguments().getSerializable("listener");*/
+                listener.onAnimationFinishListener();
 
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-                }
+//                if(getArguments() != null) {
+//                    if (getArguments().getBoolean("signedIn"))
+//                        getActivity().getSupportFragmentManager().beginTransaction()
+//                                .remove(getActivity().getSupportFragmentManager().findFragmentById(R.id.container)).commit();
+//
+//                    else
+//                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new StagesFragment()).addToBackStack("stages").commit();
+//
+//                    ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+//                }
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        listener = (AnimationListener) activity;
     }
 }

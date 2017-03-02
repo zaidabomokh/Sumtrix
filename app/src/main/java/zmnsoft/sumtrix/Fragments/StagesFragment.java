@@ -1,5 +1,7 @@
 package zmnsoft.sumtrix.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import zmnsoft.sumtrix.R;
 public class StagesFragment extends Fragment implements View.OnClickListener {
 
     private TextView textView;
+    private SharedPreferences sharedPreferences;
 
     public StagesFragment() {
         // Required empty public constructor
@@ -39,9 +42,9 @@ public class StagesFragment extends Fragment implements View.OnClickListener {
 
         hideKeyboard();
 
+        sharedPreferences = getActivity().getSharedPreferences("USER_NAME" , Context.MODE_PRIVATE);
         textView = (TextView) v.findViewById(R.id.welcome_textView);
-        final String userNAme = getArguments().getString("UserName");
-        textView.setText("Welcome " + userNAme);
+        textView.setText("Welcome " + sharedPreferences.getString("USER_NAME", " "));
 
         final SumTrixFragment sumTrixFragment = new SumTrixFragment();
         final Bundle args = new Bundle();
@@ -61,7 +64,6 @@ public class StagesFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         args.putInt("size", 3);
-                        args.putString("UserName", userNAme);
                         sumTrixFragment.setArguments(args);
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).addToBackStack("sumTrix").commit();
                     }
@@ -89,7 +91,6 @@ public class StagesFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         args.putInt("size", 4);
-                        args.putString("UserName", userNAme);
                         sumTrixFragment.setArguments(args);
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).addToBackStack("sumTrix").commit();
                     }
@@ -117,7 +118,6 @@ public class StagesFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         args.putInt("size", 5);
-                        args.putString("UserName", userNAme);
                         sumTrixFragment.setArguments(args);
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).addToBackStack("sumTrix").commit();
                     }
@@ -145,7 +145,6 @@ public class StagesFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         args.putInt("size", 6);
-                        args.putString("UserName", userNAme);
                         sumTrixFragment.setArguments(args);
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).addToBackStack("sumTrix").commit();
                     }
@@ -177,7 +176,6 @@ public class StagesFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         args.putInt("size", 7);
-                        args.putString("UserName", userNAme);
                         sumTrixFragment.setArguments(args);
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, sumTrixFragment).addToBackStack("sumTrix").commit();
                     }

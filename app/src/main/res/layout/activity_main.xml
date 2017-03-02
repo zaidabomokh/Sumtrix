@@ -31,6 +31,16 @@
             android:id="@+id/UserName_edt"
             android:layout_gravity="center_horizontal"/>
 
+        <Button
+            android:backgroundTint="@color/myGrey"
+            android:textStyle="bold|italic"
+            android:typeface="serif"
+            android:text="Login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/LoginBtn"
+            android:layout_gravity="center"/>
+
     </LinearLayout>
 
 </RelativeLayout>

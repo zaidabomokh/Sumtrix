@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,6 @@ public class TopTenBoard extends Fragment {
                     public void onAnimationEnd(Animation animation) {
                         StagesFragment stagesFragment = new StagesFragment();
                         Bundle args = new Bundle();
-                        args.putString("UserName", getArguments().getString("UserName"));
                         stagesFragment.setArguments(args);
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, stagesFragment).commit();
                     }
@@ -127,6 +127,7 @@ public class TopTenBoard extends Fragment {
                 int  i = 0;
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                     User user = child.getValue(User.class);
+                    Log.d("user",user.toString());
                     TextView newText2;
                     newText2 = new TextView(getContext());
                     LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

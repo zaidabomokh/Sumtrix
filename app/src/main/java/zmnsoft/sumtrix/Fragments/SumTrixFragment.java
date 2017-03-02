@@ -110,7 +110,6 @@ public class SumTrixFragment extends Fragment {
                 vibe.vibrate(100);
                 StagesFragment stagesFragment = new StagesFragment();
                 Bundle args = new Bundle();
-                args.putString("UserName", getArguments().getString("UserName"));
                 stagesFragment.setArguments(args);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, stagesFragment).commit();
             }
